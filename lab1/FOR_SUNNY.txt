@@ -1,0 +1,1 @@
+This is lab 1. Don't work in the downloads folder, if you want to start on the lab, copy any elements you need from that folder and paste them in lab1 (or a new folder if you want to organize things better)
