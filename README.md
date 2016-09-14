@@ -1,5 +1,4 @@
-# CPEN311_CSSC
-Repository for Corwin and Sunny CPEN311 labs
+Repository for Corwin and Sunny
 
 Using Git:
 
