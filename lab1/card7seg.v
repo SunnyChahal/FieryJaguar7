@@ -22,3 +22,5 @@ module card7seg (SW, HEX0);
 	end
 	
 endmodule
+
+new module 3 5
