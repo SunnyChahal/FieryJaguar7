@@ -8,5 +8,7 @@ output [3:0] total;
 // block.  The function is described in the handout.  Be sure to read the section
 // on representing numbers in Slide Set 2.
 
+assign total = (card1 + card2 + card3) % 10;
+
 endmodule
 	
