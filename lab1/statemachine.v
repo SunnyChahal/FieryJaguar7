@@ -9,8 +9,6 @@ module statemachine ( slow_clock, resetb,
 	output load_pcard1, load_pcard2, load_pcard3;
 	output load_dcard1, load_dcard2, load_dcard3;
 	output player_win_light, dealer_win_light;
-	
-	reg [7:0] out = {load_pcard1, load_pcard2, load_pcard3, load_dcard1, load_dcard2, load_dcard3, player_win_light, dealer_win_light}
 
 	`define RST 0;	//define states
 	`define PC1 1;
@@ -24,7 +22,7 @@ module statemachine ( slow_clock, resetb,
 	reg [7:0] state;
 	
 	//next state logic
-	always_ff @(negedge slow_clock or negedge resetb) begin
+	always @(negedge slow_clock or negedge resetb) begin
 		if (reset)
 			state <= `RST;
 		case (state)
@@ -33,45 +31,64 @@ module statemachine ( slow_clock, resetb,
 			`DC1: state <= `PC2;
 			`PC2: state <= `DC2;
 			`DC2:
-				//either are 8 or above, or both are [6-7]
-				if ()
-					state <= `END;
 				//pscore is [0-5]
-				else if ()
+				if (pscore < 6)
 					state <= `PC3;
 				//pscore is [6-7] and dscore is [0-5]
-				else
+				else if ((pscore == 6 || pscore == 7) &&
+				          dscore < 6)
 					state <= `DC3;
-				end
+				//pscore or dscore is [8-9], or pscore and dscore is [6-7]
+				else
+					state <= `END;
 			`PC3: 
 				//ridiculous conditions
-				if ()
+				if (dscore == 6)
+					if (pcard3 == 6 || pcard3 == 7)
+						state <= `DC3;
+					else state <= `END;
+				if (dscore == 5)
+					//got to here sunny
 					state <= `DC3;
 				else
 					state <= `END;
-				end
 			`DC3: state <= `END;
 			`END: state <= `RST;
+			default: state <= `RST;
 		endcase
 	end
 	
 	//output logic
-	always @(*) begin
+	always_comb @(*) begin
 		case (pstate)
-			`RST: out = 0'b00000000;		//turn on load for each card
-			`PC1: out = 0'b10000000;
-			`PC2: out = 0'b01000000;
-			`PC3: out = 0'b00100000;
-			`DC1: out = 0'b00010000;
-			`DC2: out = 0'b00001000;
-			`DC3: out = 0'b00000100;
+			//turn on load signal for each card
+			`RST: {load_pcard1, load_pcard2, load_pcard3, load_dcard1, load_dcard2, load_dcard3, player_win_light, dealer_win_light}
+			= 0'b00000000;
+			`PC1: {load_pcard1, load_pcard2, load_pcard3, load_dcard1, load_dcard2, load_dcard3, player_win_light, dealer_win_light}
+			= 0'b10000000;
+			`PC2: {load_pcard1, load_pcard2, load_pcard3, load_dcard1, load_dcard2, load_dcard3, player_win_light, dealer_win_light}
+			= 0'b01000000;
+			`PC3: {load_pcard1, load_pcard2, load_pcard3, load_dcard1, load_dcard2, load_dcard3, player_win_light, dealer_win_light}
+			= 0'b00100000;
+			`DC1: {load_pcard1, load_pcard2, load_pcard3, load_dcard1, load_dcard2, load_dcard3, player_win_light, dealer_win_light}
+			= 0'b00010000;
+			`DC2: {load_pcard1, load_pcard2, load_pcard3, load_dcard1, load_dcard2, load_dcard3, player_win_light, dealer_win_light}
+			= 0'b00001000;
+			`DC3: {load_pcard1, load_pcard2, load_pcard3, load_dcard1, load_dcard2, load_dcard3, player_win_light, dealer_win_light}
+			= 0'b00000100;
+			//display win lights for player and dealer
 			`END: 
 				if (dscore > pscore)
-					out = 0'b00000001;		//dealer wins
+					{load_pcard1, load_pcard2, load_pcard3, load_dcard1, load_dcard2, load_dcard3, player_win_light, dealer_win_light}
+					= 0'b00000001;		//dealer wins
 				else if (dscore < pscore)
-					out = 0'b00000010;		//player wins
+					{load_pcard1, load_pcard2, load_pcard3, load_dcard1, load_dcard2, load_dcard3, player_win_light, dealer_win_light}
+					= 0'b00000010;		//player wins
 				else
-					out = 0'b00000011;		//tie
+					{load_pcard1, load_pcard2, load_pcard3, load_dcard1, load_dcard2, load_dcard3, player_win_light, dealer_win_light}
+					= 0'b00000011;		//tie
+			default: {load_pcard1, load_pcard2, load_pcard3, load_dcard1, load_dcard2, load_dcard3, player_win_light, dealer_win_light}
+					= 0'b00000000;
 		endcase
 	end
 	
