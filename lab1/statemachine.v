@@ -48,8 +48,19 @@ module statemachine ( slow_clock, resetb,
 						state <= `DC3;
 					else state <= `END;
 				if (dscore == 5)
-					//got to here sunny
-					state <= `DC3;
+					if (pcard3 == 4 || pcard3 == 5 || pcard3 == 6 || pcard3 == 7) 
+					        state <= `DC3;
+                                        else state <= `END; 
+                                if (dscore == 4)
+                                        if (pcard3 == 2 || pcard3 == 3 || pcard3 == 4 || pcard3 == 5 || pcard3 == 6 || pcard3 == 7)
+                                                state <= `DC3;
+                                        else state <= `END;
+                                if (dscore == 3)
+                                        if (pcard != 8)
+                                                state <= `DC3;
+                                        else state <= `END;
+                                if (dscore == 2 || dscore == 1 || dscore == 0)
+                                                state <= `DC3;
 				else
 					state <= `END;
 			`DC3: state <= `END;
