@@ -37,7 +37,7 @@ module balance (endround, SW, pscore, dscore, LEDR)
 				end else if (pbet) begin	//bet on player, -%100 payout
 					LEDR[7:0] <= balance - SW[7:0];
 				end else begin				//bet on dealer, +%95 payout
-					LEDR[7:0] <= balance + (SW[7:0] * 0.95);
+					LEDR[7:0] <= balance + SW[7:0];
 				end
 			default:
 				LEDR[7:0] <= balance;
