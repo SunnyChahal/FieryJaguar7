@@ -4,3 +4,8 @@ lab1/db/
 DE1_SoC.qsf
 DE1_SoC.qsf
 .qsf
+cs5_pin_model_dump.txt
+incremental_db/
+simulation/
+output_files/
+c5_pin_model_dump.txt

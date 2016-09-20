@@ -36,8 +36,12 @@ module statemachine ( slow_clock, resetb,
 			`PC2: state <= `DC2;
 			`DC2:
 				//pscore is [0-5]
-				if (pscore < 6)
-			   	begin
+				if (pscore == 8 || pscore == 9 || dscore == 8 || dscore == 9)
+					begin 
+					state <= `END;
+					end
+				else if (pscore < 6)
+					begin
 					state <= `PC3;
 				//pscore is [6-7] and dscore is [0-5]
 				   end 
