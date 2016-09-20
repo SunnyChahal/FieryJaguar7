@@ -1,11 +1,9 @@
 *.bak
 lab1/db/
 *.qpf
-DE1_SoC.qsf
-DE1_SoC.qsf
-.qsf
-cs5_pin_model_dump.txt
+*.qsf
 incremental_db/
 simulation/
 output_files/
 c5_pin_model_dump.txt
+*.qws
