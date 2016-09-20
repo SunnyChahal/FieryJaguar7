@@ -1,1 +1,6 @@
 *.bak
+lab1/db/
+*.qpf
+DE1_SoC.qsf
+DE1_SoC.qsf
+.qsf
