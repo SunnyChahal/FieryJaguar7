@@ -4,7 +4,7 @@
 
 module lab1 (CLOCK_50, SW, KEY, LEDR, HEX5, HEX4, HEX3, HEX2, HEX1, HEX0);
 input CLOCK_50;
-input [8:0] SW;
+input [9:0] SW;
 input [3:0] KEY;
 output [9:0] LEDR;
 output [6:0] HEX5, HEX4, HEX3, HEX2, HEX1, HEX0;
@@ -50,7 +50,7 @@ datapath dp (.slow_clock(slow_clock),
 	
 statemachine sm (.slow_clock(slow_clock),
                  .resetb(resetb),
-					  .endround(endround),
+				 .endround(endround),
                  .dscore(dscore),
                  .pscore(pscore),
                  .pcard3(pcard3),
