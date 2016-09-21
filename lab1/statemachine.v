@@ -9,7 +9,7 @@ module statemachine ( slow_clock, resetb,
 	output reg load_pcard1, load_pcard2, load_pcard3;
 	output reg load_dcard1, load_dcard2, load_dcard3;
 	output reg player_win_light, dealer_win_light;
-
+	
 	`define RST 0	//define states
 	`define PC1 1
 	`define DC1 2
@@ -26,7 +26,7 @@ module statemachine ( slow_clock, resetb,
 		if (resetb == 0) 
 			begin
 			state <= `RST;
-			end 
+			end
 		else 
 		begin
 		case (state)
@@ -134,7 +134,7 @@ module statemachine ( slow_clock, resetb,
 			`DC3: {load_pcard1, load_pcard2, load_pcard3, load_dcard1, load_dcard2, load_dcard3, player_win_light, dealer_win_light}
 			= 8'b00000100;
 			//display win lights for player and dealer
-			`END: 
+			`END:
 				if (dscore > pscore)
 					{load_pcard1, load_pcard2, load_pcard3, load_dcard1, load_dcard2, load_dcard3, player_win_light, dealer_win_light}
 					= 8'b00000001;		//dealer wins
@@ -146,6 +146,7 @@ module statemachine ( slow_clock, resetb,
 					= 8'b00000011;		//tie
 			default: {load_pcard1, load_pcard2, load_pcard3, load_dcard1, load_dcard2, load_dcard3, player_win_light, dealer_win_light}
 					= 8'b00000000;
+					
 		endcase
 	end
 	
