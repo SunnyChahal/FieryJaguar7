@@ -1,4 +1,4 @@
-module datapath_w_chlngtsk ( slow_clock, fast_clock, resetb,
+module datapath ( slow_clock, fast_clock, resetb,
                   load_pcard1, load_pcard2, load_pcard3,
                   load_dcard1, load_dcard2, load_dcard3,				  
                   pcard3_out,

@@ -63,6 +63,11 @@ statemachine sm (.slow_clock(slow_clock),
                  .player_win_light(LEDR[8]), 
                  .dealer_win_light(LEDR[9]));
 					  
-balance BALANCE_MAINTAINER ( .endround(endround), .reset(resetb), .SW(SW), .pscore(pscore_out), .dscore(dscore_out), .LEDR(LEDR) );				  
+balance bal ( .endround(endround),
+			  .reset(KEY[2]), 
+			  .SW(SW), 
+			  .pscore(pscore), 
+			  .dscore(dscore), 
+			  .LEDR(LEDR[7:0]));				  
 	
 endmodule

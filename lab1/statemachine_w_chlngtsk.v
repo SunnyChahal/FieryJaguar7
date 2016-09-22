@@ -1,4 +1,4 @@
-module statemachine_w_chlngtsk ( slow_clock, resetb, endround,
+module statemachine ( slow_clock, resetb, endround,
                       dscore, pscore, pcard3,
                       load_pcard1, load_pcard2,load_pcard3,
                       load_dcard1, load_dcard2, load_dcard3,
@@ -122,33 +122,33 @@ module statemachine_w_chlngtsk ( slow_clock, resetb, endround,
 		case (state)
 			//turn on load signal for each card
 			`RST: {load_pcard1, load_pcard2, load_pcard3, load_dcard1, load_dcard2, load_dcard3, player_win_light, dealer_win_light, endround}
-			= 8'b000000000;
+			= 9'b000000000;
 			`PC1: {load_pcard1, load_pcard2, load_pcard3, load_dcard1, load_dcard2, load_dcard3, player_win_light, dealer_win_light, endround}
-			= 8'b100000000;
+			= 9'b100000000;
 			`PC2: {load_pcard1, load_pcard2, load_pcard3, load_dcard1, load_dcard2, load_dcard3, player_win_light, dealer_win_light, endround}
-			= 8'b010000000;
+			= 9'b010000000;
 			`PC3: {load_pcard1, load_pcard2, load_pcard3, load_dcard1, load_dcard2, load_dcard3, player_win_light, dealer_win_light, endround}
-			= 8'b001000000;
+			= 9'b001000000;
 			`DC1: {load_pcard1, load_pcard2, load_pcard3, load_dcard1, load_dcard2, load_dcard3, player_win_light, dealer_win_light, endround}
-			= 8'b000100000;
+			= 9'b000100000;
 			`DC2: {load_pcard1, load_pcard2, load_pcard3, load_dcard1, load_dcard2, load_dcard3, player_win_light, dealer_win_light, endround}
-			= 8'b000010000;
+			= 9'b000010000;
 			`DC3: {load_pcard1, load_pcard2, load_pcard3, load_dcard1, load_dcard2, load_dcard3, player_win_light, dealer_win_light, endround}
-			= 8'b000001000;
+			= 9'b000001000;
 			//display win lights for player and dealer
 			`END: 
 				if (dscore > pscore) begin
 					{load_pcard1, load_pcard2, load_pcard3, load_dcard1, load_dcard2, load_dcard3, player_win_light, dealer_win_light, endround}
-					= 8'b000000011;		//dealer wins
+					= 9'b000000011;		//dealer wins
 				end else if (dscore < pscore) begin
 					{load_pcard1, load_pcard2, load_pcard3, load_dcard1, load_dcard2, load_dcard3, player_win_light, dealer_win_light, endround}
-					= 8'b000000101;		//player wins
+					= 9'b000000101;		//player wins
 				end else begin
 					{load_pcard1, load_pcard2, load_pcard3, load_dcard1, load_dcard2, load_dcard3, player_win_light, dealer_win_light, endround}
-					= 8'b000000111;		//tie
+					= 9'b000000111;		//tie
 				end	
 			default: {load_pcard1, load_pcard2, load_pcard3, load_dcard1, load_dcard2, load_dcard3, player_win_light, dealer_win_light, endround}
-					= 8'b000000000;			
+					= 9'b000000000;			
 		endcase
 	end
 endmodule
