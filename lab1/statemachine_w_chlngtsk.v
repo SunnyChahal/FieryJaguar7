@@ -1,4 +1,4 @@
-module statemachine ( slow_clock, resetb, endround,
+module statemachine_w_chlngtsk ( slow_clock, resetb, endround,
                       dscore, pscore, pcard3,
                       load_pcard1, load_pcard2,load_pcard3,
                       load_dcard1, load_dcard2, load_dcard3,

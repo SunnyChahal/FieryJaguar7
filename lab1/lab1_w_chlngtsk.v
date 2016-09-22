@@ -2,7 +2,7 @@
 // Assuming you don't modify the inputs and outputs of the various submodules,
 // you should not have to modify anything in this file.
 
-module lab1 (CLOCK_50, SW, KEY, LEDR, HEX5, HEX4, HEX3, HEX2, HEX1, HEX0);
+module lab1_w_chlngtsk (CLOCK_50, SW, KEY, LEDR, HEX5, HEX4, HEX3, HEX2, HEX1, HEX0);
 input CLOCK_50;
 input [9:0] SW;
 input [3:0] KEY;
