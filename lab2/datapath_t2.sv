@@ -1,6 +1,6 @@
 module datapath (clk, initx, inity, loadx, loady, xdone, ydone, xp, yp);
 
-input initx, inity, loadx, loady;
+input initx, inity, loadx, loady, clk;
 output xdone, ydone;
 output reg [5:0] yp;
 output reg [6:0] xp;

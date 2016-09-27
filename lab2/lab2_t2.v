@@ -33,8 +33,8 @@ parameter WHITE = 3'b111;
 wire resetn;
 wire [7:0] x;
 wire [6:0] y;
-reg [2:0] colour;
-reg plot;
+wire [2:0] colour;	//******USED TO BE REG*******
+wire plot;				//******USED TO BE REG*******
    
 // instantiate VGA adapter 
 	
@@ -75,7 +75,7 @@ statemachine sm (.clk(CLOCK_50),
 				 .initx(initx), 
 				 .inity(inity), 
 				 .loadx(loadx), 
-				 .loady(loady)
+				 .loady(loady),
 				 .colour(colour),
 				 .plot(plot));
 

@@ -1,4 +1,4 @@
-module statemachine (clk, resetb, xdone, ydone, initx, inity, loadx, loady, colour, plot)
+module statemachine (clk, resetb, xdone, ydone, initx, inity, loadx, loady, colour, plot);
 
 input xdone, ydone, resetb, clk;
 output reg initx, inity, loadx, loady, plot;
