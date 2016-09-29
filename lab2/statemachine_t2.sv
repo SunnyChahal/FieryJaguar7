@@ -1,8 +1,8 @@
-module statemachine (clk, resetb, xdone, ydone, initx, inity, loadx, loady, colour, plot);
+module statemachine (clk, resetb, xdone, ydone, initx, inity, loadx, loady, plot);
 
 input xdone, ydone, resetb, clk;
 output reg initx, inity, loadx, loady, plot;
-output reg [2:0] colour;
+
 
 reg [2:0] state;
 
@@ -14,11 +14,11 @@ reg [2:0] state;
 //outputs
 always_comb begin
 	case (state)
-		`INIT: {initx,inity,loady,loadx,plot} <=   5'b11110; //init everything
-		`YCNT: {initx,inity,loady,loadx,plot} <=   5'b10110;
-		`XCNT: {initx,inity,loady,loadx,plot} <=   5'b00011; //plot on x tic
-		`DONE: {initx,inity,loady,loadx,plot} <=   5'b00010; //do nothing
-		default: {initx,inity,loady,loadx,plot} <= 5'b00010; //do nothing
+		`INIT: {inity,initx,loadx,loady,plot} <=   5'b11110; //init everything
+		`XCNT: {inity,initx,loadx,loady,plot} <=   5'b10110; 
+		`YCNT: {inity,initx,loadx,loady,plot} <=   5'b00011; //plot on y tic
+		`DONE: {inity,initx,loadx,loady,plot} <=   5'b00010; //do nothing
+		default: {inity,initx,loadx,loady,plot} <= 5'b00010; //do nothing
 	endcase
 end
 
@@ -26,10 +26,10 @@ end
 always_ff @(posedge clk, posedge resetb) begin
 	if (resetb) state <= `INIT;
 	case (state)
-		`INIT: state <= `XCNT;
-		`YCNT: state <= `XCNT;
-		`XCNT: if (!xdone) state <= `XCNT;
-			   else if (!ydone) state <= `YCNT;
+		`INIT: state <= `YCNT;
+		`XCNT: state <= `YCNT;
+		`YCNT: if (!ydone) state <= `YCNT;
+			   else if (!xdone) state <= `XCNT;
 			   else state <= `DONE;
 		default: state <= `DONE;
 	endcase

@@ -1,4 +1,4 @@
-module lab2 (CLOCK_50, 
+module lab2_t2 (CLOCK_50, 
 	   KEY,             
        VGA_R, VGA_G, VGA_B, 
        VGA_HS,             
@@ -66,7 +66,8 @@ datapath dp     (.clk(CLOCK_50),
 				 .xdone(xdone), 
 				 .ydone(ydone),
 				 .xp(x),
-				 .yp(y));
+				 .yp(y),
+				 .colour(colour));
 				 
 statemachine sm (.clk(CLOCK_50), 
 				 .resetb(!KEY[3]),
@@ -76,7 +77,6 @@ statemachine sm (.clk(CLOCK_50),
 				 .inity(inity), 
 				 .loadx(loadx), 
 				 .loady(loady),
-				 .colour(colour),
 				 .plot(plot));
 
 endmodule

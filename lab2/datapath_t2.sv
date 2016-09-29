@@ -1,6 +1,7 @@
-module datapath (clk, initx, inity, loadx, loady, xdone, ydone, xp, yp);
+module datapath (clk, initx, inity, loadx, loady, xdone, ydone, xp, yp, colour);
 
-input initx, inity, loadx, loady, clk;
+input clk, initx, inity, loadx, loady;
+output [2:0] colour;
 output xdone, ydone;
 output reg [5:0] yp;
 output reg [6:0] xp;
@@ -15,13 +16,14 @@ always_ff @(posedge clk) begin
 		if (initx)
 			xp = 0;
 		else
-			yp ++;
+			xp ++;
 	ydone <= 0;
 	xdone <= 0;
 	if (yp == 119)
 		ydone <= 1;
 	if (xp == 159)
 		xdone <= 1;
-end
 
+end
+assign colour = xp % 8;
 endmodule
