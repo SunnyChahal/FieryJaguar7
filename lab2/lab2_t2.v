@@ -1,4 +1,4 @@
-module lab2_t2 (CLOCK_50, 
+module lab2 (CLOCK_50, 
 	   KEY,             
        VGA_R, VGA_G, VGA_B, 
        VGA_HS,             
@@ -40,7 +40,7 @@ wire plot;				//******USED TO BE REG*******
 	
 vga_adapter #( .RESOLUTION("160x120"))
     vga_u0 (.resetn(KEY[3]),
-	         .clock(CLOCK_50),
+	         .clock(!KEY[0]),
 			   .colour(colour),
 			   .x(x),
 			   .y(y),
@@ -58,7 +58,7 @@ vga_adapter #( .RESOLUTION("160x120"))
 // Your code to fill the screen goes here. 
 wire initx,inity,loadx,loady,xdone,ydone;
 
-datapath dp     (.clk(CLOCK_50),
+datapath dp     (.clk(!KEY[0]),
 				 .initx(initx), 
 				 .inity(inity), 
 				 .loadx(loadx), 
@@ -69,14 +69,15 @@ datapath dp     (.clk(CLOCK_50),
 				 .yp(y),
 				 .colour(colour));
 				 
-statemachine sm (.clk(CLOCK_50), 
-				 .resetb(!KEY[3]),
+statemachine sm (.clk(!KEY[0]), 
+				 .resetb(KEY[3]),
 				 .xdone(xdone), 
 				 .ydone(ydone), 
 				 .initx(initx), 
 				 .inity(inity), 
 				 .loadx(loadx), 
 				 .loady(loady),
-				 .plot(plot));
+				 .plot(plot),
+				 .led(LEDR));
 
 endmodule
