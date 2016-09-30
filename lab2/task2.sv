@@ -1,5 +1,5 @@
-module lab2 (CLOCK_50, 
-	   KEY,             
+module task2 (CLOCK_50, 
+		 KEY,             
        VGA_R, VGA_G, VGA_B, 
        VGA_HS,             
        VGA_VS,             
@@ -33,18 +33,19 @@ parameter WHITE = 3'b111;
 wire resetn;
 wire [7:0] x;
 wire [6:0] y;
-wire [2:0] colour;	//******USED TO BE REG*******
-wire plot;				//******USED TO BE REG*******
+reg [2:0] colour; //used to be a reg
+wire plot; // used to be a reg
    
+wire loadx, loady, initx, inity, xdone, ydone;   
 // instantiate VGA adapter 
 	
 vga_adapter #( .RESOLUTION("160x120"))
     vga_u0 (.resetn(KEY[3]),
-	         .clock(!KEY[0]),
-			   .colour(colour),
-			   .x(x),
-			   .y(y),
-			   .plot(plot),
+	         .clock(CLOCK_50),
+			   .colour(colour), //3'b101
+			   .x(x), //8'b00111111
+			   .y(y), //7'b0011111 
+			   .plot(plot), //1'b1
 			   .VGA_R(VGA_R),
 			   .VGA_G(VGA_G),
 			   .VGA_B(VGA_B),	
@@ -55,29 +56,31 @@ vga_adapter #( .RESOLUTION("160x120"))
 			   .VGA_CLK(VGA_CLK));
 
 
-// Your code to fill the screen goes here. 
-wire initx,inity,loadx,loady,xdone,ydone;
-
-datapath dp     (.clk(!KEY[0]),
-				 .initx(initx), 
-				 .inity(inity), 
-				 .loadx(loadx), 
-				 .loady(loady), 
-				 .xdone(xdone), 
-				 .ydone(ydone),
-				 .xp(x),
-				 .yp(y),
-				 .colour(colour));
-				 
-statemachine sm (.clk(!KEY[0]), 
-				 .resetb(KEY[3]),
-				 .xdone(xdone), 
-				 .ydone(ydone), 
-				 .initx(initx), 
-				 .inity(inity), 
-				 .loadx(loadx), 
-				 .loady(loady),
-				 .plot(plot),
-				 .led(LEDR));
+// Your code to fill the screen goes here.  
+datapath_task2 dp (.clk(CLOCK_50),
+				.initx(initx), 
+				.inity(inity), 
+				.loadx(loadx),
+				.loady(loady),
+				.xp(x),
+				.yp(y),
+				.xdone(xdone),
+				.ydone(ydone)
+				);
+				
+statemachine_task2 sm (.clk(CLOCK_50),
+					.reset(!KEY[3]),
+					.initx(initx),
+					.inity(inity),
+					.loadx(loadx),
+					.loady(loady),
+					.xdone(xdone),
+					.ydone(ydone),
+					.plot(plot));
+always_comb
+colour = x%8;
+					
 
 endmodule
+
+
