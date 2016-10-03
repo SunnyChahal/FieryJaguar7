@@ -36,7 +36,7 @@ wire [6:0] y;
 reg [2:0] colour; //used to be a reg
 wire plot; // used to be a reg
    
-wire loadx, loady, initx, inity, xdone, ydone;   
+wire loadx, loady, initx, inity, xdone, ydone, cdone, flagc;
 // instantiate VGA adapter 
 	
 vga_adapter #( .RESOLUTION("160x120"))
@@ -53,22 +53,21 @@ vga_adapter #( .RESOLUTION("160x120"))
 			   .VGA_VS(VGA_VS),
 			   .VGA_BLANK(VGA_BLANK),
 			   .VGA_SYNC(VGA_SYNC),
-			   .VGA_CLK(VGA_CLK));
+			   .VGA_CLK(VGA_CLK));  
 
-
-// Your code to fill the screen goes here.  
-datapath_task2 dp (.clk(CLOCK_50),
-				.initx(initx), 
-				.inity(inity), 
-				.loadx(loadx),
-				.loady(loady),
-				.xp(x),
-				.yp(y),
-				.xdone(xdone),
-				.ydone(ydone)
-				);
+datapath dp (.clk(CLOCK_50),
+			 .flagc(flagc),
+			 .initx(initx), 
+			 .inity(inity), 
+			 .loadx(loadx),
+			 .loady(loady),
+			 .xp(x),
+			 .yp(y),
+			 .xdone(xdone),
+			 .ydone(ydone),
+			 .cdone(cdone));
 				
-statemachine_task2 sm (.clk(CLOCK_50),
+statemachine sm (.clk(CLOCK_50),
 					.reset(!KEY[3]),
 					.initx(initx),
 					.inity(inity),
@@ -76,11 +75,10 @@ statemachine_task2 sm (.clk(CLOCK_50),
 					.loady(loady),
 					.xdone(xdone),
 					.ydone(ydone),
-					.plot(plot));
-always_comb
-colour = x%8;
-					
+					.cdone(cdone),
+					.plot(plot),
+					.flagc(flagc));
+
+assign colour = GREEN;
 
 endmodule
-
-

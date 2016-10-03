@@ -1,4 +1,4 @@
-module statemachine_task2 (clk, reset, initx, inity, loadx, loady, xdone, ydone, plot);
+module statemachine (clk, reset, initx, inity, loadx, loady, xdone, ydone, plot);
 input xdone, ydone, reset, clk;
 output reg initx, inity, loadx, loady, plot;
 reg [1:0] current_state, next_state;

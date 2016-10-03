@@ -1,4 +1,4 @@
-module datapath_task2 (clk, flagc, initx, inity, loadx, loady, xp, yp, xdone, ydone, cdone);
+module datapath (clk, flagc, initx, inity, loadx, loady, xp, yp, xdone, ydone, cdone);
 input [4:0] sel;
 input clk, initx, inity, loadx, loady, flagc;
 output reg [6:0] yp;
