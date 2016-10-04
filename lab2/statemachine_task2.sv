@@ -5,9 +5,9 @@ reg [1:0] current_state, next_state;
 
 always_comb
 	case (current_state)
-		2'b00: {initx, inity, loady, loadx, plot} <= 5'b11110;
-		2'b01: {initx, inity, loady, loadx, plot} <= 5'b10110;
-		2'b10: {initx, inity, loady, loadx, plot} <= 5'b00011;
+		2'b00: {initx, inity, loady, loadx, plot} <= 5'b11110; //reset
+		2'b01: {initx, inity, loady, loadx, plot} <= 5'b10110; //county
+		2'b10: {initx, inity, loady, loadx, plot} <= 5'b00011; //countx
 		default: {initx, inity, loady, loadx, plot} <= 5'b00010;
 	endcase
 always_ff@(posedge clk or posedge reset)

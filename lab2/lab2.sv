@@ -36,7 +36,7 @@ wire [6:0] y;
 reg [2:0] colour; //used to be a reg
 wire plot; // used to be a reg
    
-wire loadx, loady, initx, inity, xdone, ydone, cdone, flagc;
+wire loadx, loady, loadc, initx, inity, initc, xdone, ydone, cdone, flagc;
 wire [4:0] selx, sely;
 // instantiate VGA adapter 
 	
@@ -59,9 +59,13 @@ vga_adapter #( .RESOLUTION("160x120"))
 datapath dp (.clk(CLOCK_50),
 			 .flagc(flagc),
 			 .initx(initx), 
-			 .inity(inity), 
+			 .inity(inity),
+			 .initc(initc),
 			 .loadx(loadx),
 			 .loady(loady),
+			 .loadc(loadc),
+			 .selx(selx),
+			 .sely(sely),
 			 .xp(x),
 			 .yp(y),
 			 .xdone(xdone),
@@ -69,20 +73,21 @@ datapath dp (.clk(CLOCK_50),
 			 .cdone(cdone));
 				
 statemachine sm (.clk(CLOCK_50),
-					.reset(!KEY[3]),
-					.initx(initx),
-					.inity(inity),
-					.loadx(loadx),
-					.loady(loady),
-					.xdone(xdone),
-					.ydone(ydone),
-					.cdone(cdone),
-					.flagc(flagc),
-					.plot(plot),
-					.selx(selx),
-					.sely(sely)
-					);
+				 .reset(!KEY[3]),
+				 .initx(initx),
+				 .inity(inity),
+				 .initc(initc),
+				 .loadx(loadx),
+				 .loady(loady),
+				 .loadc(loadc),
+				 .xdone(xdone),
+				 .ydone(ydone),
+				 .cdone(cdone),
+				 .flagc(flagc),
+				 .plot(plot),
+				 .selx(selx),
+				 .sely(sely));
 
-assign colour = GREEN;
-
+assign colour = flagc ? GREEN : BLACK;
+				 
 endmodule
