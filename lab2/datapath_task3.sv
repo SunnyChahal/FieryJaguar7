@@ -1,5 +1,5 @@
-module datapath (clk, flagc, initx, inity, loadx, loady, xp, yp, xdone, ydone, cdone);
-input [4:0] sel;
+module datapath (clk, flagc, initx, inity, loadx, loady, xp, yp, xdone, ydone, cdone, selx, sely);
+input [4:0] selx, sely;
 input clk, initx, inity, loadx, loady, flagc;
 output reg [6:0] yp;
 output reg [7:0] xp;
