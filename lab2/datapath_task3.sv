@@ -1,14 +1,14 @@
 module datapath (clk, flagc, initx, inity, initc, loadx, loady, loadc, xp, yp, xdone, ydone, cdone, selx, sely);
 input [4:0] selx, sely;
 input clk, initx, inity, initc, loadx, loady, loadc, flagc;
-output reg [7:0] yp;
+output reg [6:0] yp;
 output reg [7:0] xp;
 output reg xdone, ydone, cdone;
 
-reg [7:0] y;
+reg [6:0] y;
 reg [7:0] x;
 reg signed [8:0] crit;
-parameter center_y = 8'd40;
+parameter center_y = 7'd40;
 parameter center_x = 8'd80;
 parameter radius = 8'd40;
 
@@ -40,14 +40,14 @@ always_ff @(posedge(clk)) begin
 								(crit + 2 * y + 1);
 	//done signals
 	ydone <= 0;
-	xdone = 0;
-	//cdone <= 0;
+	xdone <= 0;
+	cdone <= 0;
 	if (y == 119)
 		ydone <= 1;
 	if (x == 159)
 		xdone <= 1;
-	if (y <= x)
-		cdone = 1;
+	if (y > x)
+		cdone <= 1;
 end
 
 //mux to select the VGA input for x
