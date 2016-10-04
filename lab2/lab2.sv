@@ -36,8 +36,9 @@ wire [6:0] y;
 reg [2:0] colour; //used to be a reg
 wire plot; // used to be a reg
    
-wire loadx, loady, loadc, initx, inity, initc, xdone, ydone, cdone, flagc;
+wire loadx, loady, loadc, loadr, initx, inity, initc, initr, xdone, ydone, cdone, rdone, flagc;
 wire [4:0] selx, sely;
+wire [2:0] ring;
 // instantiate VGA adapter 
 	
 vga_adapter #( .RESOLUTION("160x120"))
@@ -61,33 +62,48 @@ datapath dp (.clk(CLOCK_50),
 			 .initx(initx), 
 			 .inity(inity),
 			 .initc(initc),
+			 .initr(initr),
 			 .loadx(loadx),
 			 .loady(loady),
 			 .loadc(loadc),
+			 .loadr(loadr),
 			 .selx(selx),
 			 .sely(sely),
 			 .xp(x),
 			 .yp(y),
 			 .xdone(xdone),
 			 .ydone(ydone),
-			 .cdone(cdone));
+			 .cdone(cdone),
+			 .rdone(rdone),
+			 .ring(ring));
 				
 statemachine sm (.clk(CLOCK_50),
 				 .reset(!KEY[3]),
 				 .initx(initx),
 				 .inity(inity),
 				 .initc(initc),
+				 .initr(initr),
 				 .loadx(loadx),
 				 .loady(loady),
 				 .loadc(loadc),
+				 .loadr(loadr),
 				 .xdone(xdone),
 				 .ydone(ydone),
 				 .cdone(cdone),
+				 .rdone(rdone),
 				 .flagc(flagc),
 				 .plot(plot),
 				 .selx(selx),
 				 .sely(sely));
 
-assign colour = flagc ? GREEN : BLACK;
+always_comb begin
+	case(ring)
+		3'd1:	colour = BLUE;
+		3'd2:	colour = YELLOW;
+		3'd3:	colour = WHITE;
+		3'd4:	colour = GREEN;
+		3'd5:	colour = RED;
+		default:colour = BLACK;	endcase
+end
 				 
 endmodule
