@@ -21,6 +21,7 @@ output [4:0] selx, sely;
 reg [17:0] state;
 always_ff@(posedge clk or posedge cdone)
 		case(state)
+		if(!cdone)
 		begin
 		CLR_SCR: {loady, inity, loadx, flagc, initx, loadc, initc, selx, sely, plot} <= {7`b1111111,5`b10000,5`b10000,1`b1};
 		OCT_1:   {loady, inity, loadx, flagc, initx, loadc, initc, selx, sely, plot} <= {7`b1011001,5`b00001,5`b00001,1`b1};
@@ -31,7 +32,10 @@ always_ff@(posedge clk or posedge cdone)
 		OCT_6:   {loady, inity, loadx, flagc, initx, loadc, initc, selx, sely, plot} <= {7`b1011001,5`b01000,5`b01000,1`b1};
 		OCT_7:   {loady, inity, loadx, flagc, initx, loadc, initc, selx, sely, plot} <= {7`b1011001,5`b00001,5`b00100,1`b1};
 		OCT_8:   {loady, inity, loadx, flagc, initx, loadc, initc, selx, sely, plot} <= {7`b1011001,5`b00010,5`b01000,1`b1};
+		end
+		else
 		Done:    {loady, inity, loadx, flagc, initx, loadc, initc, selx, sely, plot} <= {7`b0000000,5`b00000,5`b00000,1`b0};
+		
 		endcase
 
 always_comb
