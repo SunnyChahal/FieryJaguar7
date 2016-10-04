@@ -38,7 +38,7 @@ always_ff@(posedge clk or posedge cdone)
 		
 		endcase
 
-always_comb
+always_ff(posedge clk or posedge cdone)
 		case(state)
 		`CLR_SCR: state <= `OCT_1;
 		`OCT_2:   state <= `OCT_3;
