@@ -37,6 +37,7 @@ reg [2:0] colour; //used to be a reg
 wire plot; // used to be a reg
    
 wire loadx, loady, initx, inity, xdone, ydone, cdone, flagc;
+wire [4:0] selx, sely;
 // instantiate VGA adapter 
 	
 vga_adapter #( .RESOLUTION("160x120"))
@@ -76,8 +77,11 @@ statemachine sm (.clk(CLOCK_50),
 					.xdone(xdone),
 					.ydone(ydone),
 					.cdone(cdone),
+					.flagc(flagc),
 					.plot(plot),
-					.flagc(flagc));
+					.selx(selx),
+					.sely(sely)
+					);
 
 assign colour = GREEN;
 
