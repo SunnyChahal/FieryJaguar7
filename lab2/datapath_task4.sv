@@ -42,13 +42,13 @@ always_ff @(posedge(clk)) begin
 	if (loadr)
 		if (initr) begin
 			ring = 0;
-			center_x = 21;
-			center_y = 2;
+			center_x = 2;
+			center_y = 60;
 		end 
 		else begin
 			ring++;
 			center_x = center_x + 26;
-			center_y = ring[0] ? center_y + 26 : center_y - 26;
+			center_y = ring[0] ? center_y - 26 : center_y + 26;
 		end
 	//done signals
 	ydone <= 0;
